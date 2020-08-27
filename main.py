@@ -1,8 +1,3 @@
-# This is a sample Python script.
-
-# Press Shift+F10 to execute it or replace it with your code.
-# Press Double Shift to search everywhere for classes, files, tool windows, actions, and settings.
-
 
 def print_hi(name):
     # Use a breakpoint in the code line below to debug your script.
@@ -30,20 +25,49 @@ if __name__ == '__main__':
         else:
 
             # add 12 to hours and remove PM
-            return str(int(str1[:2]) + 12) + str1[2:8]
+            if str1[2] == ":":
+                print("ma dwukropek ")
+                return str(int(str1[:1]) + 12) + str1[2:8]
+            else:
+                print("niema dwukropek ")
+                return str(int(str1[:2]) + 12) + str1[2:8]
+
     # See PyCharm help at https://www.jetbrains.com/help/pycharm/
+
+
     f = open('csv/_as BP Report 012220.csv','r')
     dane =f.read()
     dane = dane.split("\n")
 
     print(dane[2].split(";"))
-    print(dane[10].split(";"))
 
-    adane = dane[10].split(",")
-    adane = str(adane)
-    print("adane ", adane)
-    print(type(adane))
-    print(adane.split(";"))
-    print("godzina : ",dane[10][3])
+    d10 =dane[10]
+    print("d10", d10, "\n")
+    print("type d10", type(d10), "\n")
+    d11 = d10.split(";")
+    print(" d11 :", d11, "\n")
+    data, godzina, wysokie, niskie, tetno = d11[:5]
 
-    print(convert24(dane[10][3]))
+    print(data, godzina, wysokie, niskie, tetno, sep="\n")
+
+    print("godzina[1]" , godzina[1])
+    print("type godzina", type(godzina))
+
+    if godzina[1] == ":" :
+        godzina = "0" + godzina
+        print("godzina 0 :" + godzina)
+
+    print("poifie")
+    d12 = "1:12:15 PM"
+
+    def timeconvert(str1):
+        if str1[-2:] == "AM" and str1[:2] == "12":
+            return "00" + str1[2:-2]
+        elif str1[-2:] == "AM":
+            return str1[:-2]
+        elif str1[-2:] == "PM" and str1[:2] == "12":
+            return str1[:-2]
+        else:
+            return str(int(str1[:2]) + 12) + str1[2:8]
+
+    print("godzina po konwersji :", timeconvert(godzina))
