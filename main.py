@@ -10,6 +10,12 @@ def timeconvert(str1):
         return str1[:-2]
     else:
         return str(int(str1[:2]) + 12) + str1[2:8]
+#:TODO: rozwalone przelicznie godzin
+# wadliwa data 1.06.2020 wadliwa godzina  w10:36:40 AMw <class 'str'>
+# poprawiona godzina 12:00:00
+# wadliwa data 1.02.2020 wadliwa godzina  w8:40:59 AMw <class 'str'>
+# poprawiona godzina 08:40:59
+
 
 
 stare_niskie = 0
@@ -49,6 +55,7 @@ def wylicz_srednia(stara_data, nowa_data, stary_parametr, nowy_parametr):
         parametr = int(nowy_parametr)
     return parametr
 
+# :TODO: zrobić średnią niezależna od liczby pomiarów
 # f = open('csv/as.csv','r')
 f = open('csv/_as BP Report 012220.csv','r')
 wszystkie_dane = f.read()
