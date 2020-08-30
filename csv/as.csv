@@ -1,0 +1,9 @@
+as;;
+
+Date;Time;SYS (mmHg);DIA (mmHg);Pulse (Pulses/min);Irregular Heartbeat (y or n);Excessive Movement (y or n);Memo (y or n);MsCnt1;MsCnt2;MsCnt3;InputType;MeasureType;Comment
+12.11.2019;6:15:15 PM;148;87;93;n;n;n;3;1;0;0;1;
+12.11.2019;6:16:17 PM;140;87;87;n;n;n;3;2;0;0;1;
+12.11.2019;6:17:19 PM;134;93;92;n;n;n;3;3;0;0;1;
+12.12.2019;8:12:19 AM;139;88;86;n;n;n;3;1;0;0;0;
+12.12.2019;8:13:29 AM;131;82;81;n;n;n;3;2;0;0;0;
+12.12.2019;8:14:39 AM;128;57;81;y;n;n;3;3;0;0;0;
