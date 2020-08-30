@@ -12,51 +12,55 @@ def timeconvert(str1):
         return str(int(str1[:2]) + 12) + str1[2:8]
 
 
-# stare_niskie = 0
-# stare_tetno = 0
-stara_data = 1999
+stare_niskie = 0
+stare_tetno = 0
+stara_data = 0
 stare_wysokie = 0
-def srednia(data_pomiaru, zpomiaru_wysokie, jakies_niskie, jakies_tetno, jakas_data, jakies_wysokie):
-    if data_pomiaru == jakas_data:
-        print("data się pokrywa", data_pomiaru, " <-- data_pomiaru | stara_data --> ", jakas_data)
-        print("zgodna data ",zpomiaru_wysokie," <-- z pomiaru wysokie | stare wysokie --> ", jakies_wysokie)
-        # wysokie = (stare_wysokie + jakies_wysokie) / 2
-        # niskie = (stare_niskie + jakies_niskie) / 2
-        # tetno = (stare_tetno + jakies_tetno) / 2
-        # print("usredniony wynik", jakas_data, data_pomiaru, wysokie, niskie, tetno, sep="\t")
-        # print("----")
+
+def robi_stare(data_pomiaru, wysokie, niskie, tetno):
+    stara_data = data_pomiaru
+    stare_wysokie = wysokie
+    stare_niskie = niskie
+    stare_tetno = tetno
+    return stara_data, stare_wysokie, stare_niskie, stare_tetno
+
+def popraw_date(dane, pobrana_data):
+
+    data = pobrana_data.split(".")
+    miesiac, dzien, rok = data
+
+    if len(miesiac) < 2:
+        miesiac = "0" + miesiac
+    data_pomiaru = f"{dzien}.{miesiac}.{rok}"
+    return data_pomiaru
+
+def popraw_godzine(pobrana_godzina):
+    godzina0 = "00:00:00"
+    if pobrana_godzina[1] == ":":
+        godzina0 = "0" + pobrana_godzina
+
+    godzina = timeconvert(godzina0)
+    return godzina
+
+def wylicz_srednia(stara_data, nowa_data, stary_parametr, nowy_parametr):
+    if stara_data == nowa_data:
+        parametr = (int(stary_parametr) + int(nowy_parametr)) / 2
     else:
-        print("----- daty są różne", data_pomiaru, " <-- data_pomiaru | stara_data --> ", jakas_data)
-        global stara_data
-#        print("stara data", stara_data)
-        stara_data = data_pomiaru
+        parametr = int(nowy_parametr)
+    return parametr
 
-        global stare_wysokie
-        stare_wysokie = zpomiaru_wysokie
-        print("---- niezgodna data ",zpomiaru_wysokie," <-- z pomiaru wysokie | stare wysokie --> ", jakies_wysokie)
-        # global stare_niskie
-        stare_niskie = jakies_niskie
-        #
-        # global stare_tetno
-        stare_tetno = jakies_tetno
-        #
-    #    print("dodane do stare_wynik", jakas_data, data_pomiaru, stare_wysokie, stare_niskie, stare_tetno, sep="\t")
-    #    print("----")
-    return
-
-
-print("poza funkcją stare_wynik",stara_data) #, jakas_data, data_pomiaru, stare_wysokie, stare_niskie, stare_tetno, sep="\t")
-
+# f = open('csv/as.csv','r')
 f = open('csv/_as BP Report 012220.csv','r')
-dane = f.read()
-pobrane_dane = dane.split("\n")
-    #
-    # print(pobrane_dane)
-    # d10 = pobrane_dane[3]
-    # print("print d10: ",d10)
+wszystkie_dane = f.read()
+pobrane_dane = wszystkie_dane.split("\n")
+poprawiona_data = 0
+wysokie = 0
+niskie = 0
+tetno = 0
 
 for dane in pobrane_dane:
-#    print(dane)
+
+    stare = robi_stare(poprawiona_data, wysokie, niskie, tetno)
 
     if dane == "":
         print("awaria puste")
@@ -67,23 +71,17 @@ for dane in pobrane_dane:
     if test_na_cyfre == None :
         print("to nie cyfra")
         continue
+
     dane = dane.split(";")
     pobrana_data, pobrana_godzina, wysokie, niskie, tetno = dane[:5]
+    print("wadliwa data", pobrana_data, "wadliwa godzina ", "w"+pobrana_godzina+"w", type(pobrana_godzina))
+    poprawiona_data = popraw_date(dane[0], pobrana_data)
+    poprawiona_godzina = popraw_godzine(pobrana_godzina)
+    print("poprawiona godzina", poprawiona_godzina)
 
+    nowe = (poprawiona_data, wysokie, niskie, tetno)
+    print("-----")
 
-    if pobrana_godzina[1] == ":" :
-        godzina = "0" + pobrana_godzina
-
-    data = pobrana_data.split(".")
-    miesiac, dzien, rok = data
-
-    if len(miesiac) < 2:
-        miesiac = "0" + miesiac
-    data_pomiaru = f"{dzien}.{miesiac}.{rok}"
-    godzina = timeconvert(godzina)
-#    print("data do arkusza: ", data_pomiaru)
-#    print("godzina do arkusza:", godzina)
-
-#    print("------------------- ",stara_data, " ================ stara_data")
-    srednia(data_pomiaru, wysokie, niskie, tetno, stara_data, stare_wysokie)
-
+    print(nowe[0], "wysokie ", wylicz_srednia(stare[0], nowe[0], stare[1], nowe[1]), "s"+str(stare[1]), "n"+str(nowe[1]))
+    print(nowe[0], "niskie ", wylicz_srednia(stare[0], nowe[0], stare[2], nowe[2]), "s"+str(stare[2]), "n"+str(nowe[2]))
+    print(nowe[0], "tetno ", wylicz_srednia(stare[0], nowe[0], stare[3], nowe[3]), "s"+str(stare[3]), "n"+str(nowe[3]))
