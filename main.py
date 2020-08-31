@@ -43,12 +43,22 @@ def popraw_godzine(pobrana_godzina):
         godzina = timeconvert(pobrana_godzina)
     return godzina
 
-def wylicz_srednia(stara_data, nowa_data, stary_parametr, nowy_parametr):
+licznik = 1
+def wylicz_srednia(stara_data, nowa_data, stary_parametr, nowy_parametr, licznik):
+    licznik0 = licznik
     if stara_data == nowa_data:
-        parametr = (int(stary_parametr) + int(nowy_parametr)) / 2
+        licznik0 += 1
+        parametr = (int(stary_parametr) + int(nowy_parametr)) / licznik0
+#        print("--licznik0 stara data = nowa data", licznik0)
+        licznik = licznik0
+
+#        print("--licznik stara data = nowa data", licznik)
     else:
         parametr = int(nowy_parametr)
-    return parametr
+#        print("--licznik stara data inna nowa data", licznik0)
+        licznik = 1
+
+    return parametr, licznik
 
 # :TODO: zrobić średnią niezależna od liczby pomiarów
 # f = open('csv/as.csv','r')
@@ -76,14 +86,21 @@ for dane in pobrane_dane:
 
     dane = dane.split(";")
     pobrana_data, pobrana_godzina, wysokie, niskie, tetno = dane[:5]
-    print("wadliwa data", pobrana_data, "wadliwa godzina ", "w"+pobrana_godzina+"w", type(pobrana_godzina))
+#    print("wadliwa data", pobrana_data, "wadliwa godzina ", "w"+pobrana_godzina+"w", type(pobrana_godzina))
     poprawiona_data = popraw_date(dane[0], pobrana_data)
     poprawiona_godzina = popraw_godzine(pobrana_godzina)
-    print("poprawiona godzina", poprawiona_godzina)
+#    print("poprawiona godzina", poprawiona_godzina)
 
     nowe = (poprawiona_data, wysokie, niskie, tetno)
     print("-----")
+    wys = wylicz_srednia(stare[0], nowe[0], stare[1], nowe[1], licznik)[0]
+    nis = wylicz_srednia(stare[0], nowe[0], stare[2], nowe[2], licznik)[0]
+    tet = wylicz_srednia(stare[0], nowe[0], stare[3], nowe[3], licznik)[0]
 
-    print(nowe[0], "wysokie ", wylicz_srednia(stare[0], nowe[0], stare[1], nowe[1]), "s"+str(stare[1]), "n"+str(nowe[1]))
-    print(nowe[0], "niskie ", wylicz_srednia(stare[0], nowe[0], stare[2], nowe[2]), "s"+str(stare[2]), "n"+str(nowe[2]))
-    print(nowe[0], "tetno ", wylicz_srednia(stare[0], nowe[0], stare[3], nowe[3]), "s"+str(stare[3]), "n"+str(nowe[3]))
+    print(nowe[0], "wysokie ", int(wys), "s"+str(stare[1]), "n"+str(nowe[1]))
+    print(nowe[0], "niskie ", int(nis), "s"+str(stare[2]), "n"+str(nowe[2]))
+    print(nowe[0], "tetno ", int(tet), "s"+str(stare[3]), "n"+str(nowe[3]))
+
+#    print("co zwraca", wylicz_srednia(stare[0], nowe[0], stare[1], nowe[1], licznik))
+    licznik = wylicz_srednia(stare[0], nowe[0], stare[1], nowe[1], licznik)[1]
+    print("ostatni licznik", licznik)
