@@ -10,12 +10,6 @@ def timeconvert(str1):
         return str1[:-2]
     else:
         return str(int(str1[:2]) + 12) + str1[2:8]
-#:TODO: rozwalone przelicznie godzin
-# wadliwa data 1.06.2020 wadliwa godzina  w10:36:40 AMw <class 'str'>
-# poprawiona godzina 12:00:00
-# wadliwa data 1.02.2020 wadliwa godzina  w8:40:59 AMw <class 'str'>
-# poprawiona godzina 08:40:59
-
 
 
 stare_niskie = 0
@@ -40,12 +34,13 @@ def popraw_date(dane, pobrana_data):
     data_pomiaru = f"{dzien}.{miesiac}.{rok}"
     return data_pomiaru
 
+
 def popraw_godzine(pobrana_godzina):
-    godzina0 = "00:00:00"
     if pobrana_godzina[1] == ":":
         godzina0 = "0" + pobrana_godzina
-
-    godzina = timeconvert(godzina0)
+        godzina = timeconvert(godzina0)
+    else:
+        godzina = timeconvert(pobrana_godzina)
     return godzina
 
 def wylicz_srednia(stara_data, nowa_data, stary_parametr, nowy_parametr):
