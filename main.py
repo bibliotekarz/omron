@@ -11,23 +11,12 @@ def timeconvert(str1):
     else:
         return str(int(str1[:2]) + 12) + str1[2:8]
 
-
-stare_niskie = 0
-stare_tetno = 0
-stara_data = 0
-stare_wysokie = 0
-
 def robi_stare(data_pomiaru, wysokie, niskie, tetno):
     stara_data = data_pomiaru
     stare_wysokie = wysokie
     stare_niskie = niskie
     stare_tetno = tetno
     return stara_data, stare_wysokie, stare_niskie, stare_tetno
-
-bardzo_stare_niskie = 1110
-bardzo_stare_tetno = 1110
-bardzo_stara_data = 1110
-bardzo_stare_wysokie = 1110
 
 def robi_bardzo_stare(stara_data, stare_wysokie, stare_niskie, stare_tetno):
     bardzo_stara_data = stara_data
@@ -63,24 +52,20 @@ def wylicz_srednia(bardzo_stary_parametr, stara_data, nowa_data, stary_parametr,
         licznik0 += 1
         if licznik0 < 3:
             parametr = (int(stary_parametr) + int(nowy_parametr)) / licznik0
-#            print("średnia ", licznik0," pomiarów ", parametr)
         elif licznik0 > 2:
             parametr = (int(bardzo_stary_parametr) + int(stary_parametr) + int(nowy_parametr)) / licznik0
-#            print("średnia ", licznik0," pomiarów ", parametr)
 
         licznik = licznik0
-
-#        print("--licznik stara data = nowa data", licznik)
     else:
         parametr = int(nowy_parametr)
-#        print("--licznik stara data inna nowa data", licznik0)
         licznik = 1
 
     return parametr, licznik
 
-# :TODO: zrobić średnią niezależna od liczby pomiarów
+# :TODO: wybrać ostatni pomiar z dnia
+
+f = open('csv/_as BP Report 012220.csv','r')
 # f = open('csv/as.csv','r')
-f = open('csv/as.csv','r')
 wszystkie_dane = f.read()
 pobrane_dane = wszystkie_dane.split("\n")
 poprawiona_data = 0
@@ -92,7 +77,6 @@ bardzo_stare = (123, 123, 123, 123)
 for dane in pobrane_dane:
 
     stare = robi_stare(poprawiona_data, wysokie, niskie, tetno)
-    print(stare, "stare")
 
     if dane == "":
         print("awaria puste")
@@ -106,29 +90,20 @@ for dane in pobrane_dane:
 
     dane = dane.split(";")
     pobrana_data, pobrana_godzina, wysokie, niskie, tetno = dane[:5]
-#    print("wadliwa data", pobrana_data, "wadliwa godzina ", "w"+pobrana_godzina+"w", type(pobrana_godzina))
     poprawiona_data = popraw_date(dane[0], pobrana_data)
     poprawiona_godzina = popraw_godzine(pobrana_godzina)
-#    print("poprawiona godzina", poprawiona_godzina)
 
     nowe = (poprawiona_data, wysokie, niskie, tetno)
     print("-----")
-    print(nowe, "nowe")
-
-    print(stare, "stare")
 
     wys = wylicz_srednia(bardzo_stare[1], stare[0], nowe[0], stare[1], nowe[1], licznik)[0]
     nis = wylicz_srednia(bardzo_stare[2], stare[0], nowe[0], stare[2], nowe[2], licznik)[0]
     tet = wylicz_srednia(bardzo_stare[3], stare[0], nowe[0], stare[3], nowe[3], licznik)[0]
-
-    print(nowe[0], "wysokie ", int(wys), "s"+str(stare[1]), "n"+str(nowe[1]))
-    print(nowe[0], "niskie ", int(nis), "s"+str(stare[2]), "n"+str(nowe[2]))
-    print(nowe[0], "tetno ", int(tet), "s"+str(stare[3]), "n"+str(nowe[3]))
-
-#    print("co zwraca", wylicz_srednia(stare[0], nowe[0], stare[1], nowe[1], licznik))
     licznik = wylicz_srednia(bardzo_stare[1], stare[0], nowe[0], stare[1], nowe[1], licznik)[1]
-    print("ostatni licznik", licznik)
-
 
     bardzo_stare = robi_bardzo_stare(stare[0], stare[1], stare[2], stare[3])
-    print(bardzo_stare, "bardzo_stare koniec")
+
+    print(int(wys), "wys")
+    print(int(nis), "nis")
+    print(int(tet), "tet")
+    print(licznik, "licznik")
