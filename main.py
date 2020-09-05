@@ -62,6 +62,13 @@ def wylicz_srednia(bardzo_stary_parametr, stara_data, nowa_data, stary_parametr,
 
     return parametr, licznik
 
+def wybierz_pomiar:
+    pomiar_jeden = [poprawiona_data, int(wys), int(nis), int(tet),licznik]
+    pomiar_wszystkie = pomiar_wszystkie.append(pomiar_jeden)
+    print(pomiar_jeden, sep="\t")
+    print(pomiar_wszystkie, sep="\t")
+
+
 # :TODO: wybrać ostatni pomiar z dnia
 
 f = open('csv/_as BP Report 012220.csv','r')
@@ -73,6 +80,9 @@ wysokie = 0
 niskie = 0
 tetno = 0
 bardzo_stare = (123, 123, 123, 123)
+pomiar_wszystkie=["as"]
+print(pomiar_wszystkie)
+print(type(pomiar_wszystkie))
 
 for dane in pobrane_dane:
 
@@ -103,7 +113,9 @@ for dane in pobrane_dane:
 
     bardzo_stare = robi_bardzo_stare(stare[0], stare[1], stare[2], stare[3])
 
-    print(int(wys), "wys")
-    print(int(nis), "nis")
-    print(int(tet), "tet")
-    print(licznik, "licznik")
+    # print(poprawiona_data)
+    # print(int(wys), "wys")
+    # print(int(nis), "nis")
+    # print(int(tet), "tet")
+    # print(licznik, "licznik")
+
