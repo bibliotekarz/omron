@@ -64,29 +64,41 @@ def wylicz_srednia(bardzo_stary_parametr, stara_data, nowa_data, stary_parametr,
 
 pomiar_wszystkie = [['01.01.2000', 0, 0, 0, 0]]
 def wybierz_pomiar():
-#    print(pomiar_wszystkie)
-    pomiar_stary = pomiar_wszystkie[-1]
-#    print(pomiar_stary, "pomiar_stary")
-    pomiar_aktualny = [poprawiona_data, int(wys), int(nis), int(tet),licznik]
-    pomiar_jeden = pomiar_aktualny
-    while pomiar_stary[0] == pomiar_aktualny[0]:
-        if pomiar_jeden[-1] > pomiar_stary[-1]:
+
+     pomiar_stary = pomiar_wszystkie[-1]
+     pomiar_aktualny = [poprawiona_data, int(wys), int(nis), int(tet), licznik]
+     pomiar_jeden = ['01.01.1010', 0, 0, 0, 0]
+
+     while pomiar_stary[0] == pomiar_aktualny[0]:
+#        pass
+        if pomiar_aktualny[-1] == 3:
+            print("trzy", pomiar_aktualny)
             pomiar_jeden = pomiar_aktualny
-            print(pomiar_jeden, "pomiar jeden w ifie")
 #            pomiar_wszystkie.append(pomiar_jeden)
             break
         else:
-            pomiar_jeden = pomiar_stary
-            print(pomiar_jeden, "pomiar jeden else w ifie")
-            pomiar_wszystkie.append(pomiar_jeden)
-            break
-    else:
-        pomiar_jeden = pomiar_aktualny
-        print("dodaj pomiar_jeden ", pomiar_jeden )
+            if pomiar_aktualny[-1] == 2:
+                print("dwa", pomiar_aktualny)
+                pomiar_jeden = pomiar_aktualny
+#                pomiar_wszystkie.append(pomiar_jeden)
+                break
+            else:
+                if pomiar_aktualny[-1] == 1:
+                    print("jeden", pomiar_aktualny)
+                    pomiar_jeden = pomiar_aktualny
+#                    pomiar_wszystkie.append(pomiar_jeden)
+                    break
+        # else:
+        #     print("błąd jakiś")
+        #     print(type(pomiar_aktualny), "pomiar_aktualny", pomiar_aktualny)
+        #     break
+
         pomiar_wszystkie.append(pomiar_jeden)
-
-
-#    print(pomiar_jeden, sep="\t")
+        continue
+ #       break
+     else:
+        pomiar_wszystkie.append(pomiar_aktualny)
+        print(pomiar_jeden, "pomiar_jeden")
 
 
 # :TODO: wybrać ostatni pomiar z dnia
