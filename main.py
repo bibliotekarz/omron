@@ -62,11 +62,31 @@ def wylicz_srednia(bardzo_stary_parametr, stara_data, nowa_data, stary_parametr,
 
     return parametr, licznik
 
-def wybierz_pomiar:
-    pomiar_jeden = [poprawiona_data, int(wys), int(nis), int(tet),licznik]
-    pomiar_wszystkie = pomiar_wszystkie.append(pomiar_jeden)
-    print(pomiar_jeden, sep="\t")
-    print(pomiar_wszystkie, sep="\t")
+pomiar_wszystkie = [['01.01.2000', 0, 0, 0, 0]]
+def wybierz_pomiar():
+#    print(pomiar_wszystkie)
+    pomiar_stary = pomiar_wszystkie[-1]
+#    print(pomiar_stary, "pomiar_stary")
+    pomiar_aktualny = [poprawiona_data, int(wys), int(nis), int(tet),licznik]
+    pomiar_jeden = pomiar_aktualny
+    while pomiar_stary[0] == pomiar_aktualny[0]:
+        if pomiar_jeden[-1] > pomiar_stary[-1]:
+            pomiar_jeden = pomiar_aktualny
+            print(pomiar_jeden, "pomiar jeden w ifie")
+#            pomiar_wszystkie.append(pomiar_jeden)
+            break
+        else:
+            pomiar_jeden = pomiar_stary
+            print(pomiar_jeden, "pomiar jeden else w ifie")
+            pomiar_wszystkie.append(pomiar_jeden)
+            break
+    else:
+        pomiar_jeden = pomiar_aktualny
+        print("dodaj pomiar_jeden ", pomiar_jeden )
+        pomiar_wszystkie.append(pomiar_jeden)
+
+
+#    print(pomiar_jeden, sep="\t")
 
 
 # :TODO: wybrać ostatni pomiar z dnia
@@ -80,9 +100,9 @@ wysokie = 0
 niskie = 0
 tetno = 0
 bardzo_stare = (123, 123, 123, 123)
-pomiar_wszystkie=["as"]
-print(pomiar_wszystkie)
-print(type(pomiar_wszystkie))
+# pomiar_wszystkie=["as"]
+# print(pomiar_wszystkie)
+# print(type(pomiar_wszystkie))
 
 for dane in pobrane_dane:
 
@@ -118,4 +138,7 @@ for dane in pobrane_dane:
     # print(int(nis), "nis")
     # print(int(tet), "tet")
     # print(licznik, "licznik")
+    wybierz_pomiar()
+
+print(pomiar_wszystkie, sep="\n")
 
