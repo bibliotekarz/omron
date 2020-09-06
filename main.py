@@ -1,5 +1,5 @@
 import re
-
+import csv
 
 def timeconvert(str1):
     if str1[-2:] == "AM" and str1[:2] == "12":
@@ -71,35 +71,28 @@ def wybierz_pomiar():
 
      while pomiar_stary[0] == pomiar_aktualny[0]:
         if pomiar_aktualny[-1] == 3:
-            print("trzy", pomiar_aktualny)
             pomiar_jeden = pomiar_aktualny
-            pomiar_wszystkie[-1] = pomiar_jeden
+            pomiar_wszystkie[-1] = pomiar_jeden[0:-1]
             break
         else:
             if pomiar_aktualny[-1] == 2:
-                print("dwa", pomiar_aktualny)
                 pomiar_jeden = pomiar_aktualny
-                pomiar_wszystkie[-1] = pomiar_jeden
+                pomiar_wszystkie[-1] = pomiar_jeden[0:-1]
                 break
             else:
                 if pomiar_aktualny[-1] == 1:
-                    print("jeden", pomiar_aktualny)
                     pomiar_jeden = pomiar_aktualny
-                    pomiar_wszystkie[-1] = pomiar_jeden
+                    pomiar_wszystkie[-1] = pomiar_jeden[0:-1]
                     break
 
-        pomiar_wszystkie.append(pomiar_jeden)
+        pomiar_wszystkie.append(pomiar_jeden[0:-1])
         continue
- #       break
+
      else:
-        pomiar_wszystkie.append(pomiar_aktualny)
-        print(pomiar_jeden, "pomiar_jeden")
+        pomiar_wszystkie.append(pomiar_aktualny[0:-1])
 
 
-# :TODO: wybrać ostatni pomiar z dnia
-
-f = open('csv/_as BP Report 012220.csv','r')
-# f = open('csv/as.csv','r')
+f = open('csv/sample.csv','r')
 wszystkie_dane = f.read()
 pobrane_dane = wszystkie_dane.split("\n")
 poprawiona_data = 0
@@ -128,7 +121,6 @@ for dane in pobrane_dane:
     poprawiona_godzina = popraw_godzine(pobrana_godzina)
 
     nowe = (poprawiona_data, wysokie, niskie, tetno)
-    print("-----")
 
     wys = wylicz_srednia(bardzo_stare[1], stare[0], nowe[0], stare[1], nowe[1], licznik)[0]
     nis = wylicz_srednia(bardzo_stare[2], stare[0], nowe[0], stare[2], nowe[2], licznik)[0]
@@ -136,13 +128,10 @@ for dane in pobrane_dane:
     licznik = wylicz_srednia(bardzo_stare[1], stare[0], nowe[0], stare[1], nowe[1], licznik)[1]
 
     bardzo_stare = robi_bardzo_stare(stare[0], stare[1], stare[2], stare[3])
-
-    # print(poprawiona_data)
-    # print(int(wys), "wys")
-    # print(int(nis), "nis")
-    # print(int(tet), "tet")
-    # print(licznik, "licznik")
     wybierz_pomiar()
 
-print(pomiar_wszystkie, sep="\n")
+pomiar_wszystkie.pop(0)
 
+with open("csv/wynik.csv", 'w', newline='') as f:
+    wri = csv.writer(f, quoting=csv.QUOTE_NONNUMERIC, lineterminator=';\n\r')
+    wri.writerows(pomiar_wszystkie)
