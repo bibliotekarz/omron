@@ -70,28 +70,23 @@ def wybierz_pomiar():
      pomiar_jeden = ['01.01.1010', 0, 0, 0, 0]
 
      while pomiar_stary[0] == pomiar_aktualny[0]:
-#        pass
         if pomiar_aktualny[-1] == 3:
             print("trzy", pomiar_aktualny)
             pomiar_jeden = pomiar_aktualny
-#            pomiar_wszystkie.append(pomiar_jeden)
+            pomiar_wszystkie[-1] = pomiar_jeden
             break
         else:
             if pomiar_aktualny[-1] == 2:
                 print("dwa", pomiar_aktualny)
                 pomiar_jeden = pomiar_aktualny
-#                pomiar_wszystkie.append(pomiar_jeden)
+                pomiar_wszystkie[-1] = pomiar_jeden
                 break
             else:
                 if pomiar_aktualny[-1] == 1:
                     print("jeden", pomiar_aktualny)
                     pomiar_jeden = pomiar_aktualny
-#                    pomiar_wszystkie.append(pomiar_jeden)
+                    pomiar_wszystkie[-1] = pomiar_jeden
                     break
-        # else:
-        #     print("błąd jakiś")
-        #     print(type(pomiar_aktualny), "pomiar_aktualny", pomiar_aktualny)
-        #     break
 
         pomiar_wszystkie.append(pomiar_jeden)
         continue
@@ -112,9 +107,6 @@ wysokie = 0
 niskie = 0
 tetno = 0
 bardzo_stare = (123, 123, 123, 123)
-# pomiar_wszystkie=["as"]
-# print(pomiar_wszystkie)
-# print(type(pomiar_wszystkie))
 
 for dane in pobrane_dane:
 
