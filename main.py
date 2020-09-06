@@ -135,5 +135,5 @@ for dane in pobrane_dane:
 pomiar_wszystkie.pop(0)
 
 with open("csv/wynik.csv", 'w', newline='') as f:
-    wri = csv.writer(f, quoting=csv.QUOTE_NONNUMERIC, lineterminator=';\n\r')
+    wri = csv.writer(f, quoting=csv.QUOTE_NONNUMERIC, delimiter=';', lineterminator=';\n')
     wri.writerows(pomiar_wszystkie)
