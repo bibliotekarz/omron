@@ -1,5 +1,6 @@
-import re
 import csv
+import re
+
 
 def timeconvert(str1):
     if str1[-2:] == "AM" and str1[:2] == "12":
@@ -84,13 +85,14 @@ def wybierz_pomiar():
                     pomiar_jeden = pomiar_aktualny
                     pomiar_wszystkie[-1] = pomiar_jeden[0:-1]
                     break
+                else:
+                    break
 
         pomiar_wszystkie.append(pomiar_jeden[0:-1])
         continue
 
      else:
         pomiar_wszystkie.append(pomiar_aktualny[0:-1])
-
 
 f = open('csv/sample.csv','r')
 wszystkie_dane = f.read()
